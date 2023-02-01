@@ -16,7 +16,7 @@ public class Web2Application {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(Web2Application.class, args);
 
-        Client client = new Client(URI.create("ws://localhost:8251"));
+        Client client = new Client(URI.create("ws://89.218.1.74:8251"));
         client.connect();
 
         try {
