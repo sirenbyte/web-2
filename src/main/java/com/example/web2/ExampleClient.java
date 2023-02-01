@@ -46,7 +46,6 @@ public class ExampleClient extends WebSocketClient {
         JSONObject obj = new JSONObject(message);
         if (obj.has("devEui")) {
             try {
-                client.connectBlocking();
                 savedRepository.save(new Saved(obj.toString(), LocalDateTime.now().toString()));
                 String devEui = obj.getString("devEui");
                 JSONObject data = obj.getJSONObject("data");
@@ -76,11 +75,8 @@ public class ExampleClient extends WebSocketClient {
                 } else {
                     System.out.println("Dont save: " + sendMessage);
                 }
-                client.closeBlocking();
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
         }
     }
