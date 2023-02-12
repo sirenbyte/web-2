@@ -42,7 +42,6 @@ public class ExampleClient extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        System.out.println(message);
         JSONObject obj = new JSONObject(message);
         if (obj.has("devEui")) {
             try {
