@@ -39,6 +39,7 @@ public class Client extends WebSocketClient {
     @Override
     public void onError(Exception ex) {
         System.out.println("Error in client server: 8251");
+        System.out.println(ex.getMessage());
         ex.printStackTrace();
     }
 

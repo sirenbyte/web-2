@@ -21,8 +21,6 @@ public class ExampleClient extends WebSocketClient {
     private SavedRepository savedRepository;
     private HistoryRepository historyRepository;
 
-    private Client client;
-
 
     public ExampleClient(URI serverURI, HistoryRepository historyRepository, SavedRepository savedRepository) {
         super(serverURI);
@@ -38,10 +36,6 @@ public class ExampleClient extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-        client = new Client(URI.create("ws://89.218.1.74:8251"));
-        System.out.println("opened simple connection");
-        client.connect();
-
         System.out.println("opened lorenof connection");
     }
 
@@ -75,12 +69,18 @@ public class ExampleClient extends WebSocketClient {
                 if (len > 3) {
                     System.out.println("Save: " + sendMessage);
                     historyRepository.save(sendMessage);
+
+                    Client client = new Client(URI.create("ws://89.218.1.74:8251"));
+                    client.connect();
+                    Thread.sleep(3000);
                     client.send(new JSONObject(sendMessage).toString());
                 } else {
                     System.out.println("Dont save: " + sendMessage);
                 }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
