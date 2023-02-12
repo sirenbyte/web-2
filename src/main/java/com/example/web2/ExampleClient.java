@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.net.URI;
+import java.text.CollationKey;
 import java.time.LocalDateTime;
 
 public class ExampleClient extends WebSocketClient {
@@ -21,13 +22,16 @@ public class ExampleClient extends WebSocketClient {
     private SavedRepository savedRepository;
     private HistoryRepository historyRepository;
 
+    private Client client;
 
-    public ExampleClient(URI serverURI, HistoryRepository historyRepository, SavedRepository savedRepository) {
+
+    public ExampleClient(URI serverURI, HistoryRepository historyRepository, SavedRepository savedRepository,Client client) {
         super(serverURI);
         this.objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.savedRepository = savedRepository;
         this.historyRepository = historyRepository;
+        this.client=client;
     }
 
     public ExampleClient(URI serverURI) {
@@ -70,17 +74,12 @@ public class ExampleClient extends WebSocketClient {
                     System.out.println("Save: " + sendMessage);
                     historyRepository.save(sendMessage);
 
-                    Client client = new Client(URI.create("ws://89.218.1.74:8251"));
-                    client.connect();
-                    Thread.sleep(3000);
                     client.send(new JSONObject(sendMessage).toString());
                 } else {
                     System.out.println("Dont save: " + sendMessage);
                 }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
         }
     }
