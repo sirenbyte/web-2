@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -22,13 +23,13 @@ public class ExampleClient extends WebSocketClient {
 
     private Client client;
 
-    public ExampleClient(URI serverURI, HistoryRepository historyRepository, SavedRepository savedRepository, Client client) {
+
+    public ExampleClient(URI serverURI, HistoryRepository historyRepository, SavedRepository savedRepository) {
         super(serverURI);
         this.objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.savedRepository = savedRepository;
         this.historyRepository = historyRepository;
-        this.client = client;
     }
 
     public ExampleClient(URI serverURI) {
@@ -37,6 +38,10 @@ public class ExampleClient extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
+        client = new Client(URI.create("ws://89.218.1.74:8251"));
+        System.out.println("opened simple connection");
+        client.connect();
+
         System.out.println("opened lorenof connection");
     }
 
@@ -126,4 +131,6 @@ public class ExampleClient extends WebSocketClient {
         int sl = s.length() - 2;
         return s.substring(0, sl) + "." + s.substring(sl);
     }
+
+
 }

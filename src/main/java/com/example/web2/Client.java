@@ -4,6 +4,7 @@ import com.example.web2.repository.HistoryRepository;
 import com.example.web2.repository.SavedRepository;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import org.springframework.stereotype.Component;
 
 import java.net.URI;
 
