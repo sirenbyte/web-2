@@ -12,8 +12,12 @@ public class MyTimerTask extends TimerTask {
 
     @Override
     public void run() {
-        exampleClient.send("{\n" +
-                "\"cmd\": \"ping_req\"\n" +
-                "}");
+        if (exampleClient.isOpen()) {
+            exampleClient.send("{\n" +
+                    "\"cmd\": \"ping_req\"\n" +
+                    "}");
+        } else {
+            System.out.println("Socket is not open!");
+        }
     }
 }

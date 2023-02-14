@@ -11,10 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import java.net.URI;
-import java.text.CollationKey;
 import java.time.LocalDateTime;
 
 public class ExampleClient extends WebSocketClient {
@@ -25,13 +23,13 @@ public class ExampleClient extends WebSocketClient {
     private Client client;
 
 
-    public ExampleClient(URI serverURI, HistoryRepository historyRepository, SavedRepository savedRepository,Client client) {
+    public ExampleClient(URI serverURI, HistoryRepository historyRepository, SavedRepository savedRepository, Client client) {
         super(serverURI);
         this.objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.savedRepository = savedRepository;
         this.historyRepository = historyRepository;
-        this.client=client;
+        this.client = client;
     }
 
     public ExampleClient(URI serverURI) {
