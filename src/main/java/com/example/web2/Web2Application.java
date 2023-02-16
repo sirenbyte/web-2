@@ -25,7 +25,7 @@ public class Web2Application {
         try {
             Thread.sleep(3000);
             ExampleClient c = new ExampleClient(new URI("wss://loranet.kz/ws/v2/?app_id=51A83D29&token=NGPY9Y8rJbIBZeYbC2FTB7"), context.getBean(HistoryRepository.class), context.getBean(SavedRepository.class), client);
-            c.setConnectionLostTimeout(0);
+            c.setConnectionLostTimeout(59 * 60 * 1000);
             c.connect();
 
             Thread.sleep(3000);
